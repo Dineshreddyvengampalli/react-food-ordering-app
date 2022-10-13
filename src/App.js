@@ -1,23 +1,39 @@
-import logo from './logo.svg';
 import './App.css';
+import ProductPage from './Components/ProductsPage/ProductPage';
+import UserCart from './Components/Cart/UserCart';
+import { useState } from 'react';
 
 function App() {
+  let [products,setProducts] = useState([])
+  let [cartDisplay,setCartDisplay] = useState(false)
+  let [productDisplay,setProductDisplay] = useState(true)
+  let [productAmount,setProductAmount] = useState(0)
+
+  let cartHandler = (e)=>{
+    setCartDisplay(true)
+    setProductDisplay(false)
+  }
+  let closeHandler = ()=>{
+    setCartDisplay(false)
+    setProductDisplay(true)
+  }
+  let onProductAdd = (productList,amount)=>{
+    setProducts((prevProduct)=>{
+      return [...prevProduct,productList]
+     
+    })
+    setProductAmount((prevAmount)=>{
+      return prevAmount+amount
+    })
+  }
+  console.log(products)
+  console.log(productAmount)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={cartHandler}>Show Cart</button>
+      { productDisplay && <ProductPage onProductAdd = {onProductAdd} ></ProductPage>}
+      { cartDisplay && <UserCart closeHandler = {closeHandler} cartProducts = {products}></UserCart>}
     </div>
   );
 }
