@@ -7,7 +7,6 @@ function App() {
   let [products,setProducts] = useState([])
   let [cartDisplay,setCartDisplay] = useState(false)
   let [productDisplay,setProductDisplay] = useState(true)
-  let [productAmount,setProductAmount] = useState(0)
 
   let cartHandler = (e)=>{
     setCartDisplay(true)
@@ -17,18 +16,11 @@ function App() {
     setCartDisplay(false)
     setProductDisplay(true)
   }
-  let onProductAdd = (productList,amount)=>{
+  let onProductAdd = (productList,amount,quantity)=>{
     setProducts((prevProduct)=>{
-      return [...prevProduct,productList]
-     
-    })
-    setProductAmount((prevAmount)=>{
-      return prevAmount+amount
+      return [...prevProduct,{'item':productList,'totalAmount':amount,'quantity':quantity}]
     })
   }
-  console.log(products)
-  console.log(productAmount)
-
   return (
     <div className="App">
       <button onClick={cartHandler}>Show Cart</button>
